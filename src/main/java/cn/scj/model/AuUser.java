@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * au_user
- * @author 
+ * @author
  */
 @Data
 public class AuUser implements Serializable {
@@ -184,5 +184,13 @@ public class AuUser implements Serializable {
         String i = getCreateTime().toLocalDate().toString()+" "+(getCreateTime().toLocalTime().toString().equals("00:00")?"00:00:00":getCreateTime().toLocalTime().toString());
         return i;
     }
-
+    public String getLastTime1(){
+        String i = "";
+        if(getLastUpdateTime()!=null){
+            i = getLastUpdateTime().toLocalDate().toString()+" "+(getLastUpdateTime().toLocalTime().toString().equals("00:00")?"00:00:00":getLastUpdateTime().toLocalTime().toString());
+        }else{
+            i="--";
+        }
+        return i;
+     }
 }
