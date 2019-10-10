@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.CountryMapper">
+
+  <select id="findAll" resultType="cn.scj.model.Country">
+    select id, continent_id, name, lower_name, country_code, full_name, cname, full_cname, remark, continent
+    from country
+  </select>
+</mapper>

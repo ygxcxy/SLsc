@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.DataDictionaryMapper">
+
+  <select id="findByTypeCode" resultType="cn.scj.model.DataDictionary">
+    select value_Id,value_Name
+    from data_dictionary
+    where type_Code=#{cardType}
+  </select>
+    <select id="findByValueId" resultType="cn.scj.model.DataDictionary">
+        select value_Id,value_Name
+        from data_dictionary
+        where type_Code=#{cardType} and value_Id=#{cardId}
+    </select>
+</mapper>
