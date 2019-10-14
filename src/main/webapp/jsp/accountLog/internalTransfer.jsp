@@ -135,7 +135,7 @@
 
             $.ajax({
                 url:"${ctx}/user/checkTransferCard",
-                data:{"password2":password2},
+                data:{"transferCard":transferCard},
                 success:function (data) {
                     if(data == 2000){
                         checkTCard = true;
