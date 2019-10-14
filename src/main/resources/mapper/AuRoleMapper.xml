@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.AuRoleMapper">
+  <resultMap id="BaseResultMap" type="cn.scj.model.Role">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_Code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="role_Name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_Date" jdbcType="DATE" property="createDate" />
+    <result column="is_Start" jdbcType="INTEGER" property="isStart" />
+    <result column="created_By" jdbcType="VARCHAR" property="createdBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_Code, role_Name, create_Date, is_Start, created_By
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from au_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="findAll" resultType="cn.scj.model.Role">
+      select id, role_Code, role_Name, create_Date, is_Start, created_By
+      from au_role
+    </select>
+  <select id="findCode" resultType="cn.scj.model.Role">
+     select id, role_Code, role_Name, create_Date, is_Start, created_By
+      from au_role
+      <where>
+        <if test="code!=null and code !=''">
+          <bind name="newCode" value="'%'+code+'%'"/>
+          role_Code like #{newCode}
+        </if>
+      </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from au_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="delById">
+      delete from au_role
+      where id in
+      <foreach collection="list" open="(" close=")" separator="," item="ids" index="index">
+        #{ids}
+      </foreach>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Role" useGeneratedKeys="true">
+    insert into au_role (role_Code, role_Name, create_Date, 
+      is_Start, created_By)
+    values (#{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{isStart,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Role" useGeneratedKeys="true">
+    insert into au_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleCode != null">
+        role_Code,
+      </if>
+      <if test="roleName != null">
+        role_Name,
+      </if>
+      <if test="createDate != null">
+        create_Date,
+      </if>
+      <if test="isStart != null">
+        is_Start,
+      </if>
+      <if test="createdBy != null">
+        created_By,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="isStart != null">
+        #{isStart,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.Role">
+    update au_role
+    <set>
+      <if test="roleCode != null">
+        role_Code = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        role_Name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_Date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="isStart != null">
+        is_Start = #{isStart,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_By = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scj.model.Role">
+    update au_role
+    set role_Code = #{roleCode,jdbcType=VARCHAR},
+      role_Name = #{roleName,jdbcType=VARCHAR},
+      create_Date = #{createDate,jdbcType=DATE},
+      is_Start = #{isStart,jdbcType=INTEGER},
+      created_By = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

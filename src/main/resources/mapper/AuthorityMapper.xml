@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.AuthorityMapper">
+  <resultMap id="BaseResultMap" type="cn.scj.model.Authority">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_Id" jdbcType="BIGINT" property="roleId" />
+    <result column="function_Id" jdbcType="BIGINT" property="functionId" />
+    <result column="user_Type_Id" jdbcType="BIGINT" property="userTypeId" />
+    <result column="creation_Time" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="created_By" jdbcType="VARCHAR" property="createdBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_Id, function_Id, user_Type_Id, creation_Time, created_By
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from au_authority
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="findAll" resultType="cn.scj.model.Authority">
+      select id, role_Id, function_Id, user_Type_Id, creation_Time, created_By
+      from au_authority
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from au_authority
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Authority" useGeneratedKeys="true">
+    insert into au_authority (role_Id, function_Id, user_Type_Id, 
+      creation_Time, created_By)
+    values (#{roleId,jdbcType=BIGINT}, #{functionId,jdbcType=BIGINT}, #{userTypeId,jdbcType=BIGINT}, 
+      #{creationTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Authority" useGeneratedKeys="true">
+    insert into au_authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_Id,
+      </if>
+      <if test="functionId != null">
+        function_Id,
+      </if>
+      <if test="userTypeId != null">
+        user_Type_Id,
+      </if>
+      <if test="creationTime != null">
+        creation_Time,
+      </if>
+      <if test="createdBy != null">
+        created_By,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="functionId != null">
+        #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="userTypeId != null">
+        #{userTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.Authority">
+    update au_authority
+    <set>
+      <if test="roleId != null">
+        role_Id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="functionId != null">
+        function_Id = #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="userTypeId != null">
+        user_Type_Id = #{userTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        creation_Time = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_By = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scj.model.Authority">
+    update au_authority
+    set role_Id = #{roleId,jdbcType=BIGINT},
+      function_Id = #{functionId,jdbcType=BIGINT},
+      user_Type_Id = #{userTypeId,jdbcType=BIGINT},
+      creation_Time = #{creationTime,jdbcType=TIMESTAMP},
+      created_By = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

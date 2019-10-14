@@ -5,9 +5,9 @@
     <insert id="save">
         insert into au_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-           <if test="loginCode !=null and loginCode!=''">
-               login_Code,
-           </if>
+            <if test="loginCode !=null and loginCode!=''">
+                login_Code,
+            </if>
             <if test="userName !=null and userName!=''">
                 user_Name,
             </if>
@@ -68,12 +68,7 @@
             <if test="userAddress   !=null and userAddress  !=''">
                 user_Address,
             </if>
-            <if test="referId   !=null">
-                refer_Id,
-            </if>
-            <if test="referCode   !=null and referCode  !=''">
-                refer_Code,
-            </if>
+
             <if test="roleId   !=null">
                 role_Id,
             </if>
@@ -137,12 +132,7 @@
             </if>
 
             <if test="userAddress != null and userAddress != '' ">#{userAddress}, </if>
-            <if test="referId   !=null">
-                #{referId},
-            </if>
-            <if test="referCode   !=null and referCode  !=''">
-                #{referCode},
-            </if>
+
             <if test="roleId   !=null">
                 #{roleId},
             </if>
@@ -158,7 +148,7 @@
             <if test="isStart   !=null">
                 #{isStart},
             </if>
-    </trim>
+        </trim>
     </insert>
     <update id="LoginCodeupdatePwd">
         update au_user
@@ -177,14 +167,38 @@
     <update id="updateUser">
         update au_user
         <set>
+            <if test="roleId  !=null and roleId !=''">
+                role_Id = #{roleId},
+            </if>
+            <if test="roleName  !=null and roleId !=''">
+                role_Id = #{roleId},
+            </if>
+            <if test="userName  !=null and userName !=''">
+                user_Name = #{userName},
+            </if>
             <if test="idCard  !=null and idCard !=''">
                 id_Card = #{idCard},
+            </if>
+            <if test="lastUpdateTime  !=null">
+                last_Update_Time = #{lastUpdateTime},
+            </if>
+            <if test="referId  !=null and referId !=''">
+                refer_Id= #{referId},
+            </if>
+            <if test="referCode  !=null and referCode !=''">
+                refer_Code= #{referCode},
             </if>
             <if test="cardType  !=null and cardType !=''">
                 card_Type= #{cardType},
             </if>
             <if test="cardTypeName  !=null and cardTypeName !=''">
                 card_Type_Name= #{cardTypeName},
+            </if>
+            <if test="userType  !=null and userType !=''">
+                user_Type= #{userType},
+            </if>
+            <if test="userTypeName  !=null and userTypeName !=''">
+                user_Type_Name= #{userTypeName},
             </if>
             <if test="mobile  !=null and mobile !=''">
                 mobile= #{mobile},
@@ -241,7 +255,7 @@
         user_Name=#{userName}
     </select>
     <select id="findLoginCode" resultType="cn.scj.model.AuUser">
-        select id,user_Name,login_Code,password,password2
+        select id,user_Name,login_Code,password,password2,role_Id
         from au_user
         where
         login_Code=#{loginCode}

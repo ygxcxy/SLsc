@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.FunctionMapper">
+  <resultMap id="BaseResultMap" type="cn.scj.model.Function">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="function_Code" jdbcType="VARCHAR" property="functionCode" />
+    <result column="function_Name" jdbcType="VARCHAR" property="functionName" />
+    <result column="func_Url" jdbcType="VARCHAR" property="funcUrl" />
+    <result column="parent_Id" jdbcType="BIGINT" property="parentId" />
+    <result column="creation_Time" jdbcType="TIMESTAMP" property="creationTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, function_Code, function_Name, func_Url, parent_Id, creation_Time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from au_function
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findAll" resultType="cn.scj.model.Function">
+       select id, function_Code, function_Name, func_Url, parent_Id, creation_Time
+      from au_function
+  </select>
+  <select id="findFirst" resultType="cn.scj.model.Function">
+        select id, function_Code, function_Name, func_Url, parent_Id, creation_Time
+      from au_function
+      where parent_Id = #{i}
+  </select>
+  <select id="findSecond" resultType="cn.scj.model.Function">
+    select id, function_Code, function_Name, func_Url, parent_Id, creation_Time
+      from au_function
+      where parent_Id in <foreach collection="list" open="(" close=")" separator="," item="i">#{i}</foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from au_function
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Function" useGeneratedKeys="true">
+    insert into au_function (function_Code, function_Name, func_Url, 
+      parent_Id, creation_Time)
+    values (#{functionCode,jdbcType=VARCHAR}, #{functionName,jdbcType=VARCHAR}, #{funcUrl,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{creationTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Function" useGeneratedKeys="true">
+    insert into au_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="functionCode != null">
+        function_Code,
+      </if>
+      <if test="functionName != null">
+        function_Name,
+      </if>
+      <if test="funcUrl != null">
+        func_Url,
+      </if>
+      <if test="parentId != null">
+        parent_Id,
+      </if>
+      <if test="creationTime != null">
+        creation_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="functionCode != null">
+        #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="functionName != null">
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcUrl != null">
+        #{funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.Function">
+    update au_function
+    <set>
+      <if test="functionCode != null">
+        function_Code = #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="functionName != null">
+        function_Name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcUrl != null">
+        func_Url = #{funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_Id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        creation_Time = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scj.model.Function">
+    update au_function
+    set function_Code = #{functionCode,jdbcType=VARCHAR},
+      function_Name = #{functionName,jdbcType=VARCHAR},
+      func_Url = #{funcUrl,jdbcType=VARCHAR},
+      parent_Id = #{parentId,jdbcType=BIGINT},
+      creation_Time = #{creationTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

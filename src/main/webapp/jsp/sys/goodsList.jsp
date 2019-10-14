@@ -19,7 +19,7 @@
         <form class="layui-form" action="">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="text" name="roleCode" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+                    <input type="text" name="goodsName" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <input type="button" class="layui-btn" id="btn" value="查询">
@@ -28,16 +28,15 @@
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckData">删除选中行</button>
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">新增</button>
-                <button class="layui-btn layui-btn-sm" lay-event="isAll">修改</button>
             </div>
         </script>
         <table id="test" lay-filter="test"></table>
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            <a class="layui-btn layui-btn-xs" lay-event="query">查看</a>
         </script>
         <script type="text/html" id="checkboxTpl">
-            <input type="checkbox" name="isStart" value="{{d.isStart}}" title="启用" lay-filter="lockDemo" {{ d.isStart == 1 ? 'checked' : '' }}>
+            <input type="checkbox" name="state" value="{{d.state}}" title="上架" lay-filter="lockDemo" {{ d.state == 1 ? 'checked' : '' }}>
         </script>
         <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
         <script>
@@ -46,9 +45,8 @@
                 var $ = layui.jquery;
                 var layer = layui.layer;
                 $("#btn").click(function () {
-                    var code = $("input[name='roleCode']").val();
                     $.ajax({
-                        url:'${ctx}/sys/role/list?code='+code,
+                        url:'${ctx}/sys/goods/list',
                         type:'post',
                         success:function (data) {
                             main()
@@ -68,7 +66,7 @@
                             }
                             var obj = {'ids':ids};
                             $.ajax({
-                                url:'${ctx}/sys/role/del',
+                                url:'${ctx}/sys/goods/dels',
                                 type:'post',
                                 data:JSON.stringify(ids),
                                 contentType:"application/json",
@@ -84,10 +82,10 @@
                             break;
                         case 'getCheckLength':
                             var data = checkStatus.data;
-                            location.href="${ctx}/sys/role/to/add";
+                            location.href="${ctx}/sys/goods/to/add";
                             break;
                         case 'isAll':
-                            location.href="${ctx}/sys/role/to/updateRole";
+                            location.href="${ctx}/sys/to/updateUser";
                             break;
 
                         //自定义头工具栏右侧图标 - 提示
@@ -100,8 +98,8 @@
                 table.on('tool(test)', function(obj){
 
                     var data = obj.data;
-                    if(obj.event === 'detail'){
-                        layer.msg('ID：'+ data.id + ' 的查看操作');
+                    if(obj.event === 'query'){
+                        location.href = "${ctx}/sys/goods/to/query?id="+data.id
                     } else if(obj.event === 'del'){
                         layer.confirm('真的删除行么', function(index){
                             $.ajax({
@@ -118,7 +116,8 @@
                             })
                         });
                     } else if(obj.event === 'edit'){
-                        layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                        // layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                       alert("1111")
                     }
                 });
 
@@ -127,20 +126,22 @@
                 function main() {
                     table.render({
                         elem: '#test'
-                        ,url: '${ctx}/sys/role/list' //数据接口
+                        ,url: '${ctx}/sys/goods/list' //数据接口
                         ,page: true //开启分页
                         ,limit:5
                         ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                         ,cols: [[ //表头
                             {type: 'checkbox', fixed: 'left'}
-                            ,{field: 'roleCode', title: '角色编号', width:180, sort: true, fixed: 'left'}
-                            ,{field: 'roleName', title: '角色名称', width:180}
-                            ,{field:'createdBy', title: '创建人', width: 200 }
-                            ,{field: 'lastTime1', title: '创建日期', width: 177}
-                            ,{field:'lock', title:'是否启用', width:110, templet: '#checkboxTpl', unresize: true}
+                            ,{field: 'goodsName', title: '商品名称', width:180, sort: true, fixed: 'left'}
+                            ,{field: 'marketPrice', title: '市场价(元)', width:180}
+                            ,{field: 'realPrice', title: '优惠价(元)', width:180}
+                            ,{field:'num', title: '库存', width: 200 }
+                            ,{field: 'lastTime1', title: '最后修改时间', width: 177}
+                            ,{field:'lock', title:'状态(上架/下架)', width:110, templet: '#checkboxTpl', unresize: true}
+                            ,{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
                         ]],
                         where:{
-                            code:$("input[name='roleCode']").val()
+                            goodsName:$("input[name='goodsName']").val()
                         }
                     });
                 }

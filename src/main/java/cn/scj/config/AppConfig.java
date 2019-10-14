@@ -2,7 +2,6 @@ package cn.scj.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +23,7 @@ import java.util.List;
  * 总配置类
  */
 @Configuration
-@ComponentScan(basePackages = {"cn.scj.service","cn.scj.Component"})
+@ComponentScan(basePackages = {"cn.scj.service", "cn.scj.component"})
 @Import({MybatisConfig.class,SpringMvcConfig.class})// 导入其它的配置类
 @EnableWebMvc
 public class AppConfig implements WebMvcConfigurer {

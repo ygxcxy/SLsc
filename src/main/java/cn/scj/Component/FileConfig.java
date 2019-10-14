@@ -1,4 +1,4 @@
-package cn.scj.Component;
+package cn.scj.component;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

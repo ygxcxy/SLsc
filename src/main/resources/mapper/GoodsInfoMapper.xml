@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.GoodsInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.scj.model.GoodsInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_SN" jdbcType="VARCHAR" property="goodsSn" />
+    <result column="goods_Name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="market_Price" jdbcType="DOUBLE" property="marketPrice" />
+    <result column="real_Price" jdbcType="DOUBLE" property="realPrice" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="create_Time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_Update_Time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="created_By" jdbcType="VARCHAR" property="createdBy" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.scj.model.GoodsInfoWithBLOBs">
+    <result column="goods_Format" jdbcType="LONGVARCHAR" property="goodsFormat" />
+    <result column="note" jdbcType="LONGVARCHAR" property="note" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_SN, goods_Name, market_Price, real_Price, `state`, num, unit, create_Time, 
+    last_Update_Time, created_By
+  </sql>
+  <sql id="Blob_Column_List">
+    goods_Format, note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="findList" resultType="cn.scj.model.GoodsInfoWithBLOBs">
+      select id, goods_SN, goods_Name, goods_Format, market_Price, real_Price,
+      state, note, num, unit, create_Time, last_Update_Time, created_By
+      from goods_info
+      <where>
+        <if test="goodsName!=null and goodsName !=''">
+          <bind name="newGoodsName" value="'%'+goodsName+'%'"/>
+          goods_Name like #{newGoodsName}
+        </if>
+      </where>
+
+
+    </select>
+  <select id="findBySn" resultType="cn.scj.model.GoodsInfoWithBLOBs">
+    select goods_SN
+    from goods_info
+    where goods_SN = #{goodsSn}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="dels">
+    delete from goods_info
+    where id in
+    <foreach collection="list" open="(" close=")" separator="," item="ids">
+        #{ids}
+    </foreach>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.GoodsInfoWithBLOBs" useGeneratedKeys="true">
+    insert into goods_info (goods_SN, goods_Name, market_Price, 
+      real_Price, `state`, num, 
+      unit, create_Time, last_Update_Time, 
+      created_By, goods_Format, note
+      )
+    values (#{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DOUBLE}, 
+      #{realPrice,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+      #{unit,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{goodsFormat,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.GoodsInfoWithBLOBs" useGeneratedKeys="true">
+    insert into goods_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsSn != null">
+        goods_SN,
+      </if>
+      <if test="goodsName != null">
+        goods_Name,
+      </if>
+      <if test="marketPrice != null">
+        market_Price,
+      </if>
+      <if test="realPrice != null">
+        real_Price,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="createTime != null">
+        create_Time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_Update_Time,
+      </if>
+      <if test="createdBy != null">
+        created_By,
+      </if>
+      <if test="goodsFormat != null">
+        goods_Format,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsSn != null">
+        #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="realPrice != null">
+        #{realPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsFormat != null">
+        #{goodsFormat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.GoodsInfoWithBLOBs">
+    update goods_info
+    <set>
+      <if test="goodsSn != null">
+        goods_SN = #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_Name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        market_Price = #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="realPrice != null">
+        real_Price = #{realPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_Update_Time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_By = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsFormat != null">
+        goods_Format = #{goodsFormat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.scj.model.GoodsInfoWithBLOBs">
+    update goods_info
+    set goods_SN = #{goodsSn,jdbcType=VARCHAR},
+      goods_Name = #{goodsName,jdbcType=VARCHAR},
+      market_Price = #{marketPrice,jdbcType=DOUBLE},
+      real_Price = #{realPrice,jdbcType=DOUBLE},
+      `state` = #{state,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      create_Time = #{createTime,jdbcType=TIMESTAMP},
+      last_Update_Time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      created_By = #{createdBy,jdbcType=VARCHAR},
+      goods_Format = #{goodsFormat,jdbcType=LONGVARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scj.model.GoodsInfo">
+    update goods_info
+    set goods_SN = #{goodsSn,jdbcType=VARCHAR},
+      goods_Name = #{goodsName,jdbcType=VARCHAR},
+      market_Price = #{marketPrice,jdbcType=DOUBLE},
+      real_Price = #{realPrice,jdbcType=DOUBLE},
+      `state` = #{state,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      create_Time = #{createTime,jdbcType=TIMESTAMP},
+      last_Update_Time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      created_By = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

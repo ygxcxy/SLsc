@@ -2,7 +2,6 @@ package cn.scj.service.impl;
 
 import cn.scj.dto.PwdDto;
 import cn.scj.dto.ResponseCode;
-import cn.scj.dto.UidDto;
 import cn.scj.mapper.AuUserMapper;
 import cn.scj.model.AuUser;
 import cn.scj.service.UserService;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -112,6 +112,18 @@ public class UserServiceImpl implements UserService {
             code.setMsg("删除成功");
         }
         return code;
+    }
+
+    @Override
+    public void add(AuUser user) {
+        user.setCreateTime(LocalDateTime.now());
+        user.setPassword("1");
+        user.setPassword2("1");
+        if(user.getRoleId()==1){
+            user.setUserType("");
+            user.setUserTypeName("");
+        }
+        userMapper.save(user);
     }
 
 

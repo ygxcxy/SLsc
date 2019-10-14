@@ -27,9 +27,11 @@ public interface UserService {
 
     void updateUser(AuUser user);
 
-    ResponseCode findAllCode(ResponseCode responseCode,String loginCode);
+    ResponseCode findAllCode(ResponseCode responseCode, String loginCode);
 
     ResponseCode delById(Long id);
 
     ResponseCode delByIds(List<Integer> ids);
+
+    void add(AuUser user);
 }

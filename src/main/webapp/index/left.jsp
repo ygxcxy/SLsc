@@ -17,7 +17,10 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">后台管理</a>
                     <dl class="layui-nav-child">
-
+                        <dd><a href="${ctx}/sys/user/to/list">用户管理</a></dd>
+                        <dd><a href="${ctx}/sys/role/to/list">角色管理</a></dd>
+                        <dd><a href="${ctx}/sys/fun/to/list">权限管理</a></dd>
+                        <dd><a href="${ctx}/sys/goods/to/list">商品管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">

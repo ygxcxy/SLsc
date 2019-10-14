@@ -19,7 +19,7 @@
         <form class="layui-form" action="">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="text" name="roleCode" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+                    <input type="text" name="loginCode" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <input type="button" class="layui-btn" id="btn" value="查询">
@@ -46,9 +46,8 @@
                 var $ = layui.jquery;
                 var layer = layui.layer;
                 $("#btn").click(function () {
-                    var code = $("input[name='roleCode']").val();
                     $.ajax({
-                        url:'${ctx}/sys/role/list?code='+code,
+                        url:'${ctx}/user/list',
                         type:'post',
                         success:function (data) {
                             main()
@@ -68,7 +67,7 @@
                             }
                             var obj = {'ids':ids};
                             $.ajax({
-                                url:'${ctx}/sys/role/del',
+                                url:'${ctx}/user/dels',
                                 type:'post',
                                 data:JSON.stringify(ids),
                                 contentType:"application/json",
@@ -84,10 +83,10 @@
                             break;
                         case 'getCheckLength':
                             var data = checkStatus.data;
-                            location.href="${ctx}/sys/role/to/add";
+                                location.href="${ctx}/sys/user/to/add";
                             break;
                         case 'isAll':
-                            location.href="${ctx}/sys/role/to/updateRole";
+                            location.href="${ctx}/sys/to/updateUser";
                             break;
 
                         //自定义头工具栏右侧图标 - 提示
@@ -127,20 +126,36 @@
                 function main() {
                     table.render({
                         elem: '#test'
-                        ,url: '${ctx}/sys/role/list' //数据接口
+                        ,url: '${ctx}/sys/user/list' //数据接口
                         ,page: true //开启分页
                         ,limit:5
                         ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                         ,cols: [[ //表头
                             {type: 'checkbox', fixed: 'left'}
-                            ,{field: 'roleCode', title: '角色编号', width:180, sort: true, fixed: 'left'}
-                            ,{field: 'roleName', title: '角色名称', width:180}
-                            ,{field:'createdBy', title: '创建人', width: 200 }
-                            ,{field: 'lastTime1', title: '创建日期', width: 177}
+                            ,{field: 'loginCode', title: '用户名', width:180, sort: true, fixed: 'left'}
+                            ,{field: 'roleName', title: '角色', width:180}
+                            ,{field:'userTypeName', title: '会员类型', width: 200
+                                ,templet: function(d){
+                                    if(d.userTypeName!=null){
+                                        return d.userTypeName
+                                    }else{
+                                        return "--"
+                                    }
+                                }
+                            }
+                            ,{field: 'referCode', title: '推荐人用户名', width:180
+                                ,templet: function(d){
+                                    if(d.referCode!=null){
+                                        return d.referCode
+                                    }else{
+                                        return "--"
+                                    }
+                                }}
+                            ,{field: 'lastTime1', title: '最后修改时间', width: 177}
                             ,{field:'lock', title:'是否启用', width:110, templet: '#checkboxTpl', unresize: true}
                         ]],
                         where:{
-                            code:$("input[name='roleCode']").val()
+                            loginCode:$("input[name='loginCode']").val()
                         }
                     });
                 }
