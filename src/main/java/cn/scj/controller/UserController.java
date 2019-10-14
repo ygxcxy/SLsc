@@ -242,4 +242,5 @@ public class UserController {
         ResponseCode code = userService.delByIds(ids);
         return code;
     }
+
 }

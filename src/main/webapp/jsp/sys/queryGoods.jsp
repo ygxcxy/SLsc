@@ -91,17 +91,18 @@
                     <input type="button" onclick="javascript:history.back()" class="layui-btn" value="返回">
                 </div>
             </div>
-            <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
-            <script>
-                //JavaScript代码区域
-                layui.use(['element', 'form'], function () {
-                    var element = layui.element;
-                    var form = layui.form;
 
-                });
-            </script>
         </form>
     </div>
 </div>
 </body>
+<script src="${ctx}/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'form'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+    });
+</script>
 </html>
