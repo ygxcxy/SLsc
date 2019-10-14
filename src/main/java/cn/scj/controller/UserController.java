@@ -1,9 +1,8 @@
 package cn.scj.controller;
 
-import cn.scj.Component.FileConfig;
+import cn.scj.component.FileConfig;
 import cn.scj.dto.PwdDto;
 import cn.scj.dto.ResponseCode;
-import cn.scj.dto.UidDto;
 import cn.scj.model.AuUser;
 import cn.scj.model.Country;
 import cn.scj.model.DataDictionary;
