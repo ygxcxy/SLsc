@@ -447,6 +447,7 @@ public class SysController {
      */
     @RequestMapping("goods/updateGoods")
     public String updateGoods(GoodsInfoWithBLOBs goodsInfoWithBLOBs){
+        //sss
         goodsInfoWithBLOBs.setLastUpdateTime(LocalDateTime.now());
         goodsInfoService.updateGoods(goodsInfoWithBLOBs);
         return "redirect:/sys/goods/to/list";
