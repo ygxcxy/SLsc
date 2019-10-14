@@ -68,65 +68,66 @@
             </div>
 
         </form>
-        <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
-        <script>
-            //JavaScript代码区域
-            layui.use(['element', 'form','jquery','layer'], function () {
-                var element = layui.element;
-                var form = layui.form;
-                var $ = layui.jquery;
-                var layer = layui.layer;
-                $("#but").click(function () {
-                    var newPwd = $("input[name='newPwd']").val();
-                    var configNewPwd = $("input[name='configNewPwd']").val();
-                    if(newPwd!=configNewPwd){
-                        layer.msg("两次密码不一致");
-                        return;
-                    }else{
-                        $.ajax({
-                            url:"${ctx}/user/updatePwd",
-                            data:{newPwd:$("input[name='newPwd']").val(),
-                                oldPwd:$("input[name='oldPwd']").val()
-                            },
-                            type:"post",
-                            success:function (data) {
-                                if(data.code==4000){
-                                    layer.msg(data.msg);
-                                    return
-                                }else {
-                                    layer.msg(data.msg);
-                                }
-                            }
-                        })
-                    }
-                });
-                $("#but2").click(function () {
-                    var newPwd = $("input[name='newPwd2']").val();
-                    var configNewPwd = $("input[name='configNewPwd2']").val();
-                    if(newPwd!=configNewPwd){
-                        layer.msg("两次密码不一致");
-                        return;
-                    }else{
-                        $.ajax({
-                            url:"${ctx}/user/updatePwd2",
-                            data:{newPwd2:$("input[name='newPwd2']").val(),
-                                oldPwd2:$("input[name='oldPwd2']").val()
-                            },
-                            type:"post",
-                            success:function (data) {
-                                if(data.code==4000){
-                                    layer.msg(data.msg);
-                                    return
-                                }else {
-                                    layer.msg(data.msg);
-                                }
-                            }
-                        })
-                    }
-                })
-            });
-        </script>
+
     </div>
 </div>
 </body>
+<script src="${ctx}/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'form','jquery','layer'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        $("#but").click(function () {
+            var newPwd = $("input[name='newPwd']").val();
+            var configNewPwd = $("input[name='configNewPwd']").val();
+            if(newPwd!=configNewPwd){
+                layer.msg("两次密码不一致");
+                return;
+            }else{
+                $.ajax({
+                    url:"${ctx}/user/updatePwd",
+                    data:{newPwd:$("input[name='newPwd']").val(),
+                        oldPwd:$("input[name='oldPwd']").val()
+                    },
+                    type:"post",
+                    success:function (data) {
+                        if(data.code==4000){
+                            layer.msg(data.msg);
+                            return
+                        }else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                })
+            }
+        });
+        $("#but2").click(function () {
+            var newPwd = $("input[name='newPwd2']").val();
+            var configNewPwd = $("input[name='configNewPwd2']").val();
+            if(newPwd!=configNewPwd){
+                layer.msg("两次密码不一致");
+                return;
+            }else{
+                $.ajax({
+                    url:"${ctx}/user/updatePwd2",
+                    data:{newPwd2:$("input[name='newPwd2']").val(),
+                        oldPwd2:$("input[name='oldPwd2']").val()
+                    },
+                    type:"post",
+                    success:function (data) {
+                        if(data.code==4000){
+                            layer.msg(data.msg);
+                            return
+                        }else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                })
+            }
+        })
+    });
+</script>
 </html>

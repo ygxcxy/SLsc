@@ -159,35 +159,36 @@
                     <input type="submit" class="layui-btn" value="提交">
                 </div>
             </div>
-            <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
-            <script>
-                //JavaScript代码区域
-                layui.use(['element', 'form','jquery'], function () {
-                    var element = layui.element;
-                    var form = layui.form;
-                    var $ = layui.jquery;
-                    form.on("select(roleId)",function (data) {
-                        var pid = data.value;
-                        $("select[name='userType']").empty();
-                        $.ajax({
-                            url:'${ctx}/sys/user/userType',
-                            type:'post',
-                            success:function (data) {
-                                var html ='<option value="0">-请选择-</option>';
-                                for (i = 0;i<data.data.length;i++){
-                                    html +="<option value="+data.data[i].valueId+">"+data.data[i].valueName+"</option>"
-                                }
-                                if(pid !=1){
-                                    $("select[name='userType']").html(html);
-                                }
-                                form.render();
-                            }
-                        });
-                    })
-                });
-            </script>
+
         </form>
     </div>
 </div>
 </body>
+<script src="${ctx}/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'form','jquery'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on("select(roleId)",function (data) {
+            var pid = data.value;
+            $("select[name='userType']").empty();
+            $.ajax({
+                url:'${ctx}/sys/user/userType',
+                type:'post',
+                success:function (data) {
+                    var html ='<option value="0">-请选择-</option>';
+                    for (i = 0;i<data.data.length;i++){
+                        html +="<option value="+data.data[i].valueId+">"+data.data[i].valueName+"</option>"
+                    }
+                    if(pid !=1){
+                        $("select[name='userType']").html(html);
+                    }
+                    form.render();
+                }
+            });
+        })
+    });
+</script>
 </html>

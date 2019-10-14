@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.scj.mapper.UserAccountMapper">
+  <resultMap id="BaseResultMap" type="cn.scj.model.UserAccount">
+    <id column="ACCOUNT_ID" jdbcType="INTEGER" property="accountId" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="ACCOUNT_DATE" jdbcType="TIMESTAMP" property="accountDate" />
+    <result column="action_Desc" property="actionDesc" />
+    <result column="STAT" jdbcType="INTEGER" property="stat" />
+    <result column="BASE_IN" jdbcType="DOUBLE" property="baseIn" />
+    <result column="BASE_OUT" jdbcType="DOUBLE" property="baseOut" />
+    <result column="BASE_BALANCE" jdbcType="DOUBLE" property="baseBalance" />
+    <result column="REPEAT_IN" jdbcType="DOUBLE" property="repeatIn" />
+    <result column="REPEAT_OUT" jdbcType="DOUBLE" property="repeatOut" />
+    <result column="REPEAT_BALANCE" jdbcType="DOUBLE" property="repeatBalance" />
+    <result column="FREE_PV" jdbcType="INTEGER" property="freePv" />
+    <result column="ALREADY_PV" jdbcType="INTEGER" property="alreadyPv" />
+    <result column="BUY_PV" jdbcType="INTEGER" property="buyPv" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ACCOUNT_ID, USER_ID, ACCOUNT_DATE,action_Desc, STAT, BASE_IN, BASE_OUT, BASE_BALANCE, REPEAT_IN,
+    REPEAT_OUT, REPEAT_BALANCE, FREE_PV, ALREADY_PV, BUY_PV
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_account_201404
+    where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
+  </select>
+    <select id="showAccountByEndDate" resultType="cn.scj.model.UserAccount">
+      select
+      <include refid="Base_Column_List" />
+      from user_account_201404
+      <where>
+          user_id = #{userId}
+          <if test="beginDate != null">
+            and ACCOUNT_DATE &gt;  #{beginDate}
+          </if>
+          <if test="endDate != null">
+            and ACCOUNT_DATE &lt; #{endDate}
+          </if>
+      </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_account_201404
+    where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="ACCOUNT_ID" keyProperty="accountId" parameterType="cn.scj.model.UserAccount" useGeneratedKeys="true">
+    insert into user_account_201404 (USER_ID, ACCOUNT_DATE, STAT, 
+      BASE_IN, BASE_OUT, BASE_BALANCE, 
+      REPEAT_IN, REPEAT_OUT, REPEAT_BALANCE, 
+      FREE_PV, ALREADY_PV, BUY_PV
+      )
+    values (#{userId,jdbcType=INTEGER}, #{accountDate,jdbcType=TIMESTAMP}, #{stat,jdbcType=INTEGER}, 
+      #{baseIn,jdbcType=DOUBLE}, #{baseOut,jdbcType=DOUBLE}, #{baseBalance,jdbcType=DOUBLE}, 
+      #{repeatIn,jdbcType=DOUBLE}, #{repeatOut,jdbcType=DOUBLE}, #{repeatBalance,jdbcType=DOUBLE}, 
+      #{freePv,jdbcType=INTEGER}, #{alreadyPv,jdbcType=INTEGER}, #{buyPv,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="ACCOUNT_ID" keyProperty="accountId" parameterType="cn.scj.model.UserAccount" useGeneratedKeys="true">
+    insert into user_account_201404
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="accountDate != null">
+        ACCOUNT_DATE,
+      </if>
+      <if test="stat != null">
+        STAT,
+      </if>
+      <if test="baseIn != null">
+        BASE_IN,
+      </if>
+      <if test="baseOut != null">
+        BASE_OUT,
+      </if>
+      <if test="baseBalance != null">
+        BASE_BALANCE,
+      </if>
+      <if test="repeatIn != null">
+        REPEAT_IN,
+      </if>
+      <if test="repeatOut != null">
+        REPEAT_OUT,
+      </if>
+      <if test="repeatBalance != null">
+        REPEAT_BALANCE,
+      </if>
+      <if test="freePv != null">
+        FREE_PV,
+      </if>
+      <if test="alreadyPv != null">
+        ALREADY_PV,
+      </if>
+      <if test="buyPv != null">
+        BUY_PV,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accountDate != null">
+        #{accountDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="baseIn != null">
+        #{baseIn,jdbcType=DOUBLE},
+      </if>
+      <if test="baseOut != null">
+        #{baseOut,jdbcType=DOUBLE},
+      </if>
+      <if test="baseBalance != null">
+        #{baseBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatIn != null">
+        #{repeatIn,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatOut != null">
+        #{repeatOut,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatBalance != null">
+        #{repeatBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="freePv != null">
+        #{freePv,jdbcType=INTEGER},
+      </if>
+      <if test="alreadyPv != null">
+        #{alreadyPv,jdbcType=INTEGER},
+      </if>
+      <if test="buyPv != null">
+        #{buyPv,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.UserAccount">
+    update user_account_201404
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accountDate != null">
+        ACCOUNT_DATE = #{accountDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stat != null">
+        STAT = #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="baseIn != null">
+        BASE_IN = #{baseIn,jdbcType=DOUBLE},
+      </if>
+      <if test="baseOut != null">
+        BASE_OUT = #{baseOut,jdbcType=DOUBLE},
+      </if>
+      <if test="baseBalance != null">
+        BASE_BALANCE = #{baseBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatIn != null">
+        REPEAT_IN = #{repeatIn,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatOut != null">
+        REPEAT_OUT = #{repeatOut,jdbcType=DOUBLE},
+      </if>
+      <if test="repeatBalance != null">
+        REPEAT_BALANCE = #{repeatBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="freePv != null">
+        FREE_PV = #{freePv,jdbcType=INTEGER},
+      </if>
+      <if test="alreadyPv != null">
+        ALREADY_PV = #{alreadyPv,jdbcType=INTEGER},
+      </if>
+      <if test="buyPv != null">
+        BUY_PV = #{buyPv,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scj.model.UserAccount">
+    update user_account_201404
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      ACCOUNT_DATE = #{accountDate,jdbcType=TIMESTAMP},
+      STAT = #{stat,jdbcType=INTEGER},
+      BASE_IN = #{baseIn,jdbcType=DOUBLE},
+      BASE_OUT = #{baseOut,jdbcType=DOUBLE},
+      BASE_BALANCE = #{baseBalance,jdbcType=DOUBLE},
+      REPEAT_IN = #{repeatIn,jdbcType=DOUBLE},
+      REPEAT_OUT = #{repeatOut,jdbcType=DOUBLE},
+      REPEAT_BALANCE = #{repeatBalance,jdbcType=DOUBLE},
+      FREE_PV = #{freePv,jdbcType=INTEGER},
+      ALREADY_PV = #{alreadyPv,jdbcType=INTEGER},
+      BUY_PV = #{buyPv,jdbcType=INTEGER}
+    where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
+  </update>
+</mapper>

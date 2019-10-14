@@ -288,4 +288,9 @@
 
 
     </select>
+    <select id="queryUserById" resultType="cn.scj.model.AuUser">
+        select password,password2
+        from au_user
+        where id = #{id}
+    </select>
 </mapper>

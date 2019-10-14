@@ -242,4 +242,13 @@ public class UserController {
         ResponseCode code = userService.delByIds(ids);
         return code;
     }
+
+    //检查二级密码
+    @RequestMapping("checkPassword2")
+    @ResponseBody
+    public ResponseCode checkPassword2(HttpSession session,@RequestParam("password2")String password2){
+        AuUser user = (AuUser) session.getAttribute("user");
+        ResponseCode code = userService.checkPassword2(user.getId(),password2);
+        return code;
+    }
 }

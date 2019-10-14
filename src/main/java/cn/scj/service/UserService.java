@@ -34,4 +34,7 @@ public interface UserService {
     ResponseCode delByIds(List<Integer> ids);
 
     void add(AuUser user);
+
+    ResponseCode checkPassword2(Long id, String password2);
+
 }
