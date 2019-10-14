@@ -1,7 +1,9 @@
 package cn.scj.controller;
 
+import cn.scj.Component.FileConfig;
 import cn.scj.dto.PwdDto;
 import cn.scj.dto.ResponseCode;
+import cn.scj.dto.UidDto;
 import cn.scj.model.AuUser;
 import cn.scj.model.Country;
 import cn.scj.model.DataDictionary;
@@ -18,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import cn.scj.component.FileConfig;
 
 /**
  * @author by Shaochenjie
