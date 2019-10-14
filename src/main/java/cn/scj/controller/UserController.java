@@ -2,8 +2,6 @@ package cn.scj.controller;
 
 import cn.scj.Component.FileConfig;
 import cn.scj.dto.PwdDto;
-import cn.scj.dto.ResponseCode;
-import cn.scj.dto.UidDto;
 import cn.scj.model.AuUser;
 import cn.scj.model.Country;
 import cn.scj.model.DataDictionary;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import cn.scj.dto.ResponseCode;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -243,4 +242,5 @@ public class UserController {
         ResponseCode code = userService.delByIds(ids);
         return code;
     }
+    
 }
