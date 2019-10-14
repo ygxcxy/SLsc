@@ -21,4 +21,6 @@ public interface GoodsInfoService {
     ResponseCode dels(List<Integer> ids);
 
     GoodsInfoWithBLOBs query(Long id);
+
+    int updateGoods(GoodsInfoWithBLOBs goodsInfoWithBLOBs);
 }

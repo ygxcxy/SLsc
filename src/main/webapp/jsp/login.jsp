@@ -50,7 +50,6 @@
                             type:"post",
                             success:function(data){
                                 if(data.code==2000){
-                                    layer.msg(data.msg);
                                     location.href="${ctx}/user/main";
                                 }
                                 if(data.code==4000){

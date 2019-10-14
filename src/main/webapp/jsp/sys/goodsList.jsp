@@ -117,7 +117,7 @@
                         });
                     } else if(obj.event === 'edit'){
                         // layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                       alert("1111")
+                        location.href="${ctx}/sys/goods/to/updateGoods?id="+data.id;
                     }
                 });
 
