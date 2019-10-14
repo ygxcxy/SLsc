@@ -30,4 +30,11 @@ public interface AuUserMapper {
     void delById(@Param("id") Long id);
 
     void delByIds(List<Integer> ids);
+
+    /**
+     * query
+     * @param id
+     * @return
+     */
+    AuUser queryUserById(@Param("id") Long id);
 }
