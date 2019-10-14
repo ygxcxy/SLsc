@@ -2,26 +2,19 @@ package cn.scj.controller;
 
 import cn.scj.component.FileConfig;
 import cn.scj.dto.ResponseCode;
-import cn.scj.model.AuUser;
-import cn.scj.model.Country;
-import cn.scj.model.DataDictionary;
-import cn.scj.model.Role;
-import cn.scj.service.CountryService;
-import cn.scj.service.DataDictionaryService;
-import cn.scj.service.RoleService;
-import cn.scj.service.UserService;
+import cn.scj.model.*;
+import cn.scj.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +42,15 @@ public class SysController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private FunctionService functionService;
+
+    @Autowired
+    private AuthorityService authoritySerive;
+
+    @Autowired
+    private GoodsInfoService goodsInfoService;
+
 
     /**
      * 跳转到用户管理页面
@@ -71,7 +73,6 @@ public class SysController {
         ResponseCode code = userService.findAllCode(responseCode, loginCode);
         return code;
     }
-
     /**
      * 跳转到add界面
      *
@@ -98,7 +99,6 @@ public class SysController {
         model.addAttribute("country", countries);
         return "sys/userAdd";
     }
-
     @RequestMapping("user/add")
     public String userAdd(
             @RequestParam("idCardPicPosPathFile")MultipartFile idCardPicPosPathFile,
@@ -131,7 +131,7 @@ public class SysController {
         if(user2==null) {
             userService.add(user);
         }
-        return "forward:/sys/user/to/list";
+        return "redirect:/sys/user/to/list";
     }
     @RequestMapping("to/updateUser")
     public String toUpdateUser(Model model,HttpSession session){
@@ -155,11 +155,9 @@ public class SysController {
         model.addAttribute("data", dictionaryList);
         return "sys/updateUser";
     }
-
     @RequestMapping("user/userType")
     @ResponseBody
     public ResponseCode userType(){
-
         ResponseCode responseCode = new ResponseCode();
         List<DataDictionary> dictionaryList = dataDictionaryService.findByTypeCode("USER_TYPE");
         responseCode.setData(dictionaryList);
@@ -175,10 +173,8 @@ public class SysController {
             AuUser use1 = userService.findAll(user.getId());
             if(use1.getIdCardPicNegPath()!=null){
             File file = new File(fileConfig.getUploadRootPath(),use1.getIdCardPicNegPath());
-
                 file.delete();
             }
-
             File file1 = new File(fileConfig.getUploadRootPath()+idCardPicNegPathFile.getOriginalFilename());
             user.setIdCardPicNegPath(idCardPicNegPathFile.getOriginalFilename());
             try {
@@ -191,7 +187,6 @@ public class SysController {
             AuUser use1 = userService.findAll(user.getId());
             if(use1.getIdCardPicPosPath()!=null){
             File file = new File(fileConfig.getUploadRootPath(),use1.getIdCardPicPosPath());
-
                 file.delete();
             }
             File f = new File(fileConfig.getUploadRootPath()+idCardPicPosPathFile.getOriginalFilename());
@@ -219,7 +214,6 @@ public class SysController {
         DataDictionary cardType = dataDictionaryService.findByValueId(user.getCardType(), "CARD_TYPE");
         Role role = roleService.findById(user.getRoleId());
         DataDictionary userType = dataDictionaryService.findByValueId(user.getUserType(), "USER_TYPE");
-
         user.setCardTypeName(cardType.getValueName());
         user.setRoleName(role.getRoleName());
         user.setUserTypeName(userType.getValueName());
@@ -229,7 +223,206 @@ public class SysController {
         user.setReferId(user3.getId());
         user.setReferCode(user3.getLoginCode());
         userService.updateUser(user);
-        return "forward:/sys/user/to/list";
+        return "redirect:/sys/user/to/list";
+    }
+
+
+
+    /**
+     * todo
+     * @param model
+     * @param session
+     * @return
+     * 权限管理
+     */
+    @RequestMapping("fun/to/list")
+    public String funList(Model model,HttpSession session){
+        /**
+         * function表
+         */
+        List<Function> f = functionService.findAll();
+        /**
+         * 第一父级
+         */
+        List<Function> functions = functionService.findFirst(0);
+        /**
+         * Authority
+         */
+        List<Authority> authorities = authoritySerive.findAll();
+        List<Long> i = new ArrayList<>();
+
+        for (Function o:functions){
+              i.add(o.getId());
+        }
+        /**
+         * 二級
+         */
+        List<Function> functionSecond = functionService.findSecond(i);
+        model.addAttribute("second",functionSecond);
+        model.addAttribute("func",f);
+        model.addAttribute("auth",authorities);
+        model.addAttribute("first",functions);
+        AuUser auUser = (AuUser) session.getAttribute("user");
+        model.addAttribute("user",auUser);
+        return "sys/functionList";
+    }
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @RequestMapping("role/list")
+    @ResponseBody
+    public ResponseCode roleList(@RequestParam(value = "code",defaultValue = "")String code){
+        List<Role> roles = roleService.findCode(code);
+        ResponseCode responseCode = new ResponseCode();
+        responseCode.setCode(0);
+        responseCode.setData(roles);
+        return responseCode;
+    }
+
+
+    /**
+     * 角色删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping("role/del")
+    @ResponseBody
+    public ResponseCode roleDel(@RequestBody List<Integer> ids){
+        ResponseCode code = roleService.delById(ids);
+        return code;
+    }
+    /**
+     * 挑转到角色界面
+     * @return
+     */
+    @RequestMapping("role/to/list")
+    public String roleToList(){
+
+        return "sys/roleList";
+    }
+
+    /**
+     * 挑转到添加角色界面
+     * @return
+     */
+    @RequestMapping("role/to/add")
+    public String roleToAdd(){
+
+        return "sys/roleAdd";
+    }
+
+    /**
+     * @param role
+     * 添加角色
+     * @return
+     */
+    @RequestMapping("role/add")
+    public String roleAdd(Role role,HttpSession session){
+
+        AuUser user = (AuUser) session.getAttribute("user");
+        role.setCreateDate(LocalDateTime.now());
+        role.setCreatedBy(user.getLoginCode());
+        roleService.save(role);
+        return "redirect:/sys/role/to/list";
+    }
+    /**
+     * 挑转到角色修改界面
+     * @return
+     */
+    @RequestMapping("role/to/updateRole")
+    public String roleToUpdateRole(HttpSession session,Model model){
+        AuUser user = (AuUser) session.getAttribute("user");
+        Role role = roleService.findById(user.getRoleId());
+        model.addAttribute("role",role);
+        return "sys/updateRole";
+    }
+    /**
+     * 角色修改
+     * @return
+     */
+    @RequestMapping("role/updateRole")
+    public String UpdateRole(Role role){
+        roleService.update(role);
+
+
+        return "redirect:/sys/role/to/list";
+    }
+    /**
+     * 跳转到商品管理页面
+     *
+     * @return
+     */
+    @RequestMapping("goods/to/list")
+    public String goodsToList() {
+        return "sys/goodsList";
+    }
+
+    /**
+     * 商品管理
+     * @param goodsName
+     * @param code
+     * @return
+     */
+    @RequestMapping("goods/list")
+    @ResponseBody
+    public ResponseCode goodsList(@RequestParam(value = "goodsName",defaultValue = "")String goodsName,ResponseCode code){
+        ResponseCode responseCode = goodsInfoService.findList(code,goodsName);
+        return responseCode;
+    }
+
+    /**
+     * 跳转到商品添加页面
+     * @return
+     */
+    @RequestMapping("goods/to/add")
+    public String goodsToAdd(){
+        return "sys/goodsAdd";
+    }
+
+    /**
+     * 商品添加
+     * @param goodsInfo
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping("goods/add")
+    public String goodsAdd(GoodsInfoWithBLOBs goodsInfo,Model model,HttpSession session){
+        AuUser user = (AuUser) session.getAttribute("user");
+        goodsInfo.setCreatedBy(user.getLoginCode());
+        goodsInfo.setCreateTime(LocalDateTime.now());
+        GoodsInfoWithBLOBs goodsInfoWithBLOBs = goodsInfoService.findBySn(goodsInfo.getGoodsSn());
+        if(goodsInfoWithBLOBs!=null){
+            return "redirect:/sys/goods/to/add";
+        }
+        goodsInfoService.insertGoods(goodsInfo);
+        return "sys/goodsAdd";
+    }
+
+    /**
+     * 商品删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping("goods/dels")
+    @ResponseBody
+    public ResponseCode del(@RequestBody List<Integer> ids){
+        ResponseCode responseCode = goodsInfoService.dels(ids);
+        return responseCode;
+    }
+
+    /**
+     * 商品查看
+     * @param id
+     * @return
+     */
+    @RequestMapping("goods/to/query")
+    public String query(@RequestParam("id")Long id,Model model){
+       GoodsInfoWithBLOBs goodsInfoWithBLOBs = goodsInfoService.query(id);
+       model.addAttribute("goods",goodsInfoWithBLOBs);
+        return "sys/queryGoods";
     }
 
 }
