@@ -1,8 +1,9 @@
 package cn.scj.controller;
 
-import cn.scj.component.FileConfig;
+import cn.scj.Component.FileConfig;
 import cn.scj.dto.PwdDto;
 import cn.scj.dto.ResponseCode;
+import cn.scj.dto.UidDto;
 import cn.scj.model.AuUser;
 import cn.scj.model.Country;
 import cn.scj.model.DataDictionary;
@@ -17,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class UserController {
     public String Register(
             @RequestParam("idCardPicPosPathFile")MultipartFile idCardPicPosPathFile,
             @RequestParam("idCardPicNegPathFile")MultipartFile idCardPicNegPathFile,
-            @RequestParam("bankPicPathFile")MultipartFile bankPicPathFile, AuUser user,HttpSession session
+            @RequestParam("bankPicPathFile")MultipartFile bankPicPathFile, AuUser user
             ){
         File idCardPicPosPath = new File(fileConfig.getUploadRootPath()+idCardPicPosPathFile.getOriginalFilename());
         File idCardPicNegPath= new File(fileConfig.getUploadRootPath()+idCardPicNegPathFile.getOriginalFilename());
@@ -80,15 +80,14 @@ public class UserController {
         user.setRoleId(2L);
         user.setRoleName("会员");
         AuUser user1 = userService.findUserName(user.getUserName());
-        AuUser user2 = (AuUser) session.getAttribute("user");
-        if(user1==null){
-            user.setReferId(user2.getId());
+        if(user1!=null){
+            user.setReferId(user1.getId());
             user.setReferCode(user1.getLoginCode());
             user.setPassword("1");
             user.setPassword2("1");
             userService.save(user);
         }
-        return "redirect:/to/register";
+        return "forward:to/register";
     }
 
     @RequestMapping("to/login")
@@ -183,11 +182,8 @@ public class UserController {
     ){
         if(idCardPicNegPathFile.getOriginalFilename()!=null &&idCardPicNegPathFile.getOriginalFilename()!=""){
             AuUser use1 = userService.findAll(user.getId());
-            if(use1.getIdCardPicNegPath()!=null){
             File file = new File(fileConfig.getUploadRootPath(),use1.getIdCardPicNegPath());
-
-                file.delete();
-            }
+            file.delete();
             File file1 = new File(fileConfig.getUploadRootPath()+idCardPicNegPathFile.getOriginalFilename());
             user.setIdCardPicNegPath(idCardPicNegPathFile.getOriginalFilename());
             try {
@@ -198,11 +194,8 @@ public class UserController {
         }
         if(idCardPicPosPathFile.getOriginalFilename()!=null &&idCardPicPosPathFile.getOriginalFilename()!=""){
             AuUser use1 = userService.findAll(user.getId());
-            if(use1.getIdCardPicPosPath()!=null){
             File file = new File(fileConfig.getUploadRootPath(),use1.getIdCardPicPosPath());
-
-                file.delete();
-            }
+            file.delete();
             File f = new File(fileConfig.getUploadRootPath()+idCardPicPosPathFile.getOriginalFilename());
             user.setIdCardPicPosPath(idCardPicPosPathFile.getOriginalFilename());
             try {
@@ -213,10 +206,8 @@ public class UserController {
         }
         if(bankPicPathFile.getOriginalFilename()!=null &&bankPicPathFile    .getOriginalFilename()!=""){
             AuUser use1 = userService.findAll(user.getId());
-            if(use1.getBankPicPath()!=null){
             File file = new File(fileConfig.getUploadRootPath(),use1.getBankPicPath());
-                file.delete();
-            }
+            file.delete();
             File f = new File(fileConfig.getUploadRootPath()+bankPicPathFile.getOriginalFilename());
             user.setBankPicPath(bankPicPathFile.getOriginalFilename());
             try {
@@ -228,7 +219,7 @@ public class UserController {
         DataDictionary cardType = dataDictionaryService.findByValueId(user.getCardType(),"CARD_TYPE");
         user.setCardTypeName(cardType.getValueName());
         userService.updateUser(user);
-        return "redirect:/to/updateUser";
+        return "forward:to/updateUser";
     }
     @RequestMapping("to/list")
     public String toList(){
