@@ -159,6 +159,7 @@
             if(!checkPwd){
                 return;
             }
+            //sfsf
             $("#password2").blur();
         })
     });
