@@ -466,7 +466,6 @@ public class SysController {
     @RequestMapping("pack/list")
     @ResponseBody
     public ResponseCode packList(@RequestParam("goodsPackCode") String goodsPackCode){
-//        ResponseBody responseBody =
         return null;
     }
 
