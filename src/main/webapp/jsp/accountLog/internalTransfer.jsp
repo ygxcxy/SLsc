@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="layui-col-xs3">
-                            <label class="layui-form-label" style="width: 190px" >
+                            <label class="layui-form-label" id="tipMoney" style="width: 190px" >
                                 <a href="${ctx}/account/toRecharge" style="color: blue">余额不足，马上去汇款充值</a>
                             </label>
                         </div>
@@ -154,6 +154,7 @@
 
         $("#btn").click(function () {
             $("input[name='transferCard']").blur();
+
             if(!checkTCard){
                 return;
             }
@@ -161,6 +162,22 @@
             $("#password2").blur();
             if(!checkPwd){
                 return;
+            }
+            var tipMoney= $("#tipMoney");
+            //账号余额
+            var balance= parseInt($("input[name='balance']").val());
+
+            //转账金额
+            var balance= parseInt($("input[name='money']").val());
+            //转账目标会员
+            var balance= $("input[name='transferCard']").val();
+
+
+            if(isNaN(balance)){
+                tipMoney.html("请输入正确的转账金额");
+                return;
+            }else{
+                tipMoney.html("<a href=\"${ctx}/account/toRecharge\" style=\"color: blue\">余额不足，马上去汇款充值</a>");
             }
         })
     });

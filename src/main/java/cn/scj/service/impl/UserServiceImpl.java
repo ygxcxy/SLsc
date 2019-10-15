@@ -126,5 +126,29 @@ public class UserServiceImpl implements UserService {
         userMapper.save(user);
     }
 
+    @Override
+    public ResponseCode checkTransferCard(String loginCode, String transferCard) {
+        return null;
+    }
+
+    @Override
+    public ResponseCode checkPassword2(Long id, String password2) {
+        ResponseCode code = new ResponseCode();
+        AuUser user = userMapper.queryUserById(id);
+        if (user == null){
+            code.setCode(ResponseCode.FAIL);
+            code.setMsg("系统错误！转账取消！");
+        }else{
+            if(user.getPassword2().equals(password2)){
+                code.setCode(ResponseCode.SUCCESS);
+                code.setMsg("验证通过！");
+            }else{
+                code.setCode(ResponseCode.FAIL);
+                code.setMsg("验证失败！二级密码错误！");
+            }
+        }
+        return code;
+    }
+
 
 }
