@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("account")
@@ -34,6 +35,7 @@ public class AccountController {
     @Autowired
     private AccountRecordService recordService;
 
+
     @RequestMapping("toAccountLog")
     public String toAccountLog(){
         return "accountLog/asicAccount";
@@ -50,6 +52,15 @@ public class AccountController {
     @RequestMapping("toRecharge")
     public String toRecharge(){
         return "accountLog/recharge";
+    }
+
+    //去申请提现
+    @RequestMapping("toCashWithdrawal")
+    public String toCashWithdrawal(Model model,HttpSession session){
+        AuUser user = (AuUser) session.getAttribute("user");
+        Account account = accountService.queryByUserId(user.getId());
+        model.addAttribute("account",account);
+        return "accountLog/cashWithdrawal";
     }
 
     @RequestMapping("showAccountByEndDate")
@@ -84,7 +95,7 @@ public class AccountController {
         ResponseCode code = userService.checkTransferCard(user.getLoginCode(), transferCard);
         return code;
     }
-    //检查转账的用户是否合法来了
+    //检查二级密码是否合法来了
     @RequestMapping("checkPassword2")
     @ResponseBody
     public ResponseCode checkPassword2(HttpSession session, @RequestParam("password2")String password2){
@@ -92,4 +103,15 @@ public class AccountController {
         ResponseCode code = userService.checkPassword2(user.getId(),password2);
         return code;
     }
+
+    //内部转账
+    @RequestMapping("transfer")
+    @ResponseBody
+    public ResponseCode transfer(HttpSession session, @RequestParam("transferCard")String transferCard,
+                                 @RequestParam("transferMoney") BigDecimal transferMoney){
+        AuUser user = (AuUser) session.getAttribute("user");
+        ResponseCode code = accountService.transfer(user.getId(),transferCard,transferMoney);
+        return code;
+    }
+
 }

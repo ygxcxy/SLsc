@@ -29,7 +29,7 @@
                     <div class="layui-col-xs3">
                         <label class="layui-form-label">当前余额：</label>
                         <div class="layui-input-block">
-                            <label class="layui-form-label">${dAccount.balance}</label>
+                            <label class="layui-form-label">${dAccount.balance}元</label>
                             <input type="hidden" name="balance" value="${dAccount.balance}" class="layui-input">
                         </div>
                     </div>
@@ -42,19 +42,21 @@
                             </div>
                         </div>
                         <div class="layui-col-xs3">
-                            <label class="layui-form-label" id="tipCard" style="color: red;width: 420px" >（接收转帐的会员用户名必须填写正确，不能给註册会员转帐。）</label>
+                            <label  id="tipCard" style="color: red;width: 500px;display:inline-block;margin-top: 10px;margin-left: 35px" >
+                                (接收转帐的会员用户名必须填写正确，不能给註册会员转帐。)
+                            </label>
                         </div>
                 </div>
                 <div class="layui-form-item">
                         <div class="layui-col-xs3">
                             <label class="layui-form-label">转账金额：</label>
                             <div class="layui-input-block">
-                                <input type="text" name="money"  value="" class="layui-input">
+                                <input type="text" name="transferMoney"  value="" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-col-xs3">
-                            <label class="layui-form-label" id="tipMoney" style="width: 190px" >
-                                <a href="${ctx}/account/toRecharge" style="color: blue">余额不足，马上去汇款充值</a>
+                            <label  id="tipMoney" style="color: red;width: 500px;display:inline-block;margin-top: 10px;margin-left: 35px" >
+
                             </label>
                         </div>
                 </div>
@@ -62,11 +64,11 @@
                         <div class="layui-col-xs3">
                             <label class="layui-form-label">二级密码：</label>
                             <div class="layui-input-block">
-                                <input type="password" autocomplete="new-password"   id="password2" value="" class="layui-input">
+                                <input type="password" autocomplete="new-password"   id="password2" name="password2" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-col-xs3">
-                            <label class="layui-form-label" id="tip" style="color: red;width: 175px" >
+                            <label id="tip" style="color: red;width: 500px;display:inline-block;margin-top: 10px;margin-left: 35px" >
                                 请输入二级密码进行验证
                             </label>
                         </div>
@@ -110,10 +112,10 @@
             }
 
             $.ajax({
-                url:"${ctx}/user/checkPassword2",
+                url:"${ctx}/account/checkPassword2",
                 data:{"password2":password2},
                 success:function (data) {
-                    if(data == 2000){
+                    if(data.code == 2000){
                         checkPwd = true;
                         tip.text(data.msg);
                     }else{
@@ -137,10 +139,8 @@
             $.ajax({
                 url:"${ctx}/account/checkTransferCard",
                 data:{"transferCard":transferCard},
-                url:"${ctx}/user/checkTransferCard",
-                data:{"password2":password2},
                 success:function (data) {
-                    if(data == 2000){
+                    if(data.code == 2000){
                         checkTCard = true;
                         tip.text(data.msg);
                     }else{
@@ -152,33 +152,72 @@
         })
 
 
+        var checkTMoney;
+        $("input[name='transferMoney']").blur(function () {
+            checkTMoney = false;
+            var tipMoney= $("#tipMoney");
+            //账号余额
+            var balance= parseFloat($("input[name='balance']").val());
+
+            //转账金额
+            var transferMoney= parseFloat($("input[name='transferMoney']").val());
+
+
+            if(isNaN(transferMoney)){
+                tipMoney.html("请输入正确的转账金额");
+                return;
+            }else if(transferMoney > balance){
+                tipMoney.html("<a href=\"${ctx}/account/toRecharge\" style=\"color: red\">余额不足，马上去汇款充值</a>");
+                return;
+            }else{
+                tipMoney.html("");
+                checkTMoney = true;
+            }
+        })
+
         $("#btn").click(function () {
+
+            //转账金额
+            var transferMoney= parseFloat($("input[name='transferMoney']").val());
+            //转账目标会员
+            var transferCard = $("input[name='transferCard']").val();
+
             $("input[name='transferCard']").blur();
 
             if(!checkTCard){
+                $("input[name='transferCard']").focus();
+                return;
+            }
+
+            if(!checkTMoney){
+                $("input[name='transferMoney']").focus();
                 return;
             }
 
             $("#password2").blur();
             if(!checkPwd){
+                $("input[name='password2']").focus();
                 return;
             }
-            var tipMoney= $("#tipMoney");
-            //账号余额
-            var balance= parseInt($("input[name='balance']").val());
 
-            //转账金额
-            var balance= parseInt($("input[name='money']").val());
-            //转账目标会员
-            var balance= $("input[name='transferCard']").val();
+            $.ajax({
+                url:"${ctx}/account/transfer",
+                data:{"transferCard":transferCard,"transferMoney":transferMoney},
+                success:function (data) {
+                    if(data.code == 2000){
+                        layer.msg(data.msg,{
+                            time:1500,
+                            end:function () {
+                            window.location.href = "${ctx}/account/toInternalTransfer";
+                            }
+                        });
 
+                    }else{
 
-            if(isNaN(balance)){
-                tipMoney.html("请输入正确的转账金额");
-                return;
-            }else{
-                tipMoney.html("<a href=\"${ctx}/account/toRecharge\" style=\"color: blue\">余额不足，马上去汇款充值</a>");
-            }
+                        layer.msg(data.msg);
+                    }
+                }
+            })
         })
     });
 </script>

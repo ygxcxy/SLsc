@@ -34,36 +34,35 @@
                     <input type="button" class="layui-btn" id="login" value="立即提交"/>
                 </div>
             </div>
-            <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
-            <script>
-                layui.use(['form','jquery','layer','element'],function(){
-                    var form = layui.form;
-                    var $ = layui.jquery;
-                    var element = layui.element;
-                    var layer = layui.layer;
-                    $("#login").click(function () {
-                        $.ajax({
-                            url:"${ctx}/user/login",
-                            data:{loginCode:$("input[name='loginCode']").val(),
-                                password:$("input[name='password']").val()
-                                },
-                            type:"post",
-                            success:function(data){
-                                if(data.code==2000){
-                                    layer.msg(data.msg);
-                                    location.href="${ctx}/user/main";
-                                }
-                                if(data.code==4000){
-                                    layer.msg(data.msg)
 
-                                }
-                            }
-                        })
-                    })
-                });
-            </script>
         </form>
     </div>
 </div>
 </body>
+<script src="${ctx}/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form','jquery','layer'],function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        $("#login").click(function () {
+            $.ajax({
+                url:"${ctx}/user/login",
+                data:{loginCode:$("input[name='loginCode']").val(),
+                    password:$("input[name='password']").val()
+                },
+                type:"post",
+                success:function(data){
+                    if(data.code==2000){
+                        location.href="${ctx}/user/main";
+                    }
+                    if(data.code==4000){
+                        layer.msg(data.msg)
+
+                    }
+                }
+            })
+        })
+    });
+</script>
 </html>

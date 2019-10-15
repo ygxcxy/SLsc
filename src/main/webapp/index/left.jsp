@@ -87,6 +87,7 @@
                     <dd><a href="${ctx}/account/toAccountLog">基本账户</a></dd>
                     <dd><a href="javascript:;">消费账户</a></dd>
                     <dd><a href="${ctx}/account/toInternalTransfer">内部转账</a></dd>
+                    <dd><a href="${ctx}/account/toCashWithdrawal">申请提现</a></dd>
                     <dd><a href="javascript:;">提现明细</a></dd>
                 </dl>
             </li>
