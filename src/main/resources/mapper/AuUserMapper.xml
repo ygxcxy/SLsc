@@ -293,4 +293,19 @@
         from au_user
         where id = #{id}
     </select>
+    <select id="queryUserByCard" resultType="cn.scj.model.AuUser">
+        select id, login_Code, password, password2, user_Name, sex,
+        birthday, card_Type, card_Type_Name, id_Card, country, mobile,
+        email, user_Address, post_Code, create_Time, refer_Id, refer_Code,
+        role_Id, role_Name, user_Type, user_Type_Name, is_Start, last_Update_Time,
+        last_Login_Time, bank_Account,
+        bank_Name, account_Holder, id_Card_Pic_neg_Path, id_Card_Pic_pos_Path, bank_Pic_Path
+        from au_user
+        <where>
+            <if test="transferCard != null and transferCard != ''">
+                login_Code = #{transferCard}
+            </if>
+        </where>
+
+    </select>
 </mapper>

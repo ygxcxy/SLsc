@@ -32,4 +32,7 @@ public interface AuUserMapper {
     void delByIds(List<Integer> ids);
 
     AuUser queryUserById(@Param("id") Long id);
+
+    AuUser queryUserByCard(@Param("transferCard") String transferCard);
+
 }

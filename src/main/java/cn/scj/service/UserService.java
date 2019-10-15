@@ -37,4 +37,5 @@ public interface UserService {
 
     ResponseCode checkPassword2(Long id, String password2);
 
+    ResponseCode checkTransferCard(String loginCode, String transferCard);
 }

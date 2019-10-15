@@ -75,11 +75,11 @@ public class AccountController {
 
 
     //检查转账的用户是否合法
-    @RequestMapping("checkPassword2")
+    @RequestMapping("checkTransferCard")
     @ResponseBody
-    public ResponseCode checkPassword2(HttpSession session,@RequestParam("password2")String password2){
+    public ResponseCode checkTransferCard(HttpSession session,@RequestParam("transferCard")String transferCard){
         AuUser user = (AuUser) session.getAttribute("user");
-        ResponseCode code = userService.checkPassword2(user.getId(),password2);
+        ResponseCode code = userService.checkTransferCard(user.getLoginCode(),transferCard);
         return code;
     }
 }
