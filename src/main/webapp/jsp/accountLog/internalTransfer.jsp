@@ -30,6 +30,7 @@
                         <label class="layui-form-label">当前余额：</label>
                         <div class="layui-input-block">
                             <label class="layui-form-label">${dAccount.balance}</label>
+                            <input type="hidden" name="balance" value="${dAccount.balance}" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -156,11 +157,11 @@
             if(!checkTCard){
                 return;
             }
+
+            $("#password2").blur();
             if(!checkPwd){
                 return;
             }
-            //sfsf
-            $("#password2").blur();
         })
     });
 </script>
