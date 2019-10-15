@@ -151,6 +151,16 @@
         })
 
 
+        $("#btn").click(function () {
+            $("input[name='transferCard']").blur();
+            if(!checkTCard){
+                return;
+            }
+            if(!checkPwd){
+                return;
+            }
+            $("#password2").blur();
+        })
     });
 </script>
 </body>
