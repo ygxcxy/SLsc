@@ -21,6 +21,7 @@
                     <dd><a href="${ctx}/sys/role/to/list">角色管理</a></dd>
                     <dd><a href="${ctx}/sys/fun/to/list">权限管理</a></dd>
                     <dd><a href="${ctx}/sys/goods/to/list">商品管理</a></dd>
+                    <dd><a href="${ctx}/sys/pack/to/list">商品套餐管理</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">

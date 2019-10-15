@@ -55,6 +55,7 @@ public class SysController {
    private GoodsPackService goodsPackService;
 
 
+
     /**
      * 跳转到用户管理页面
      *
@@ -453,9 +454,20 @@ public class SysController {
         return "redirect:/sys/goods/to/list";
     }
 
-    @RequestMapping("pack/list")
-    public String packList(){
-
-        return "";
+    /**
+     * 跳转到商品套餐界面
+     * @return
+     */
+    @RequestMapping("pack/to/list")
+    public String packToList(){
+        return "sys/packList";
     }
+
+    @RequestMapping("pack/list")
+    @ResponseBody
+    public ResponseCode packList(@RequestParam("goodsPackCode") String goodsPackCode){
+//        ResponseBody responseBody =
+        return null;
+    }
+
 }

@@ -74,4 +74,8 @@ public class GoodsPack implements Serializable {
      */
     private String note;
 
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
 }
