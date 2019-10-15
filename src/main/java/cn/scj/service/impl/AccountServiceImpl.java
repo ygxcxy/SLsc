@@ -14,6 +14,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account queryByUserId(Long userId) {
-        return accountMapper.queryByUserId(userId);
+//        return accountMapper.queryByUserId(userId);
+        return null;
     }
 }

@@ -29,6 +29,7 @@
     delete from stg_d_account
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.Account" useGeneratedKeys="true">
     insert into stg_d_account (user_id, `name`, balance, 
       update_time)
