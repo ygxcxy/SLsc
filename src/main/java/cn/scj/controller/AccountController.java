@@ -64,7 +64,8 @@ public class AccountController {
     //充值
     @RequestMapping("recharge")
     @ResponseBody
-    public ResponseCode recharge(AccountRecord record,HttpSession session){
+    public ResponseCode recharge(AccountRecord record, HttpSession session){
+
         AuUser user = (AuUser) session.getAttribute("user");
         Account account = accountService.queryByUserId(user.getId());
 
@@ -74,12 +75,21 @@ public class AccountController {
     }
 
 
+
     //检查转账的用户是否合法
     @RequestMapping("checkTransferCard")
     @ResponseBody
-    public ResponseCode checkTransferCard(HttpSession session,@RequestParam("transferCard")String transferCard){
+    public ResponseCode checkTransferCard(HttpSession session,@RequestParam("transferCard")String transferCard) {
         AuUser user = (AuUser) session.getAttribute("user");
-        ResponseCode code = userService.checkTransferCard(user.getLoginCode(),transferCard);
+        ResponseCode code = userService.checkTransferCard(user.getLoginCode(), transferCard);
+        return code;
+    }
+    //检查转账的用户是否合法来了
+    @RequestMapping("checkPassword2")
+    @ResponseBody
+    public ResponseCode checkPassword2(HttpSession session, @RequestParam("password2")String password2){
+        AuUser user = (AuUser) session.getAttribute("user");
+        ResponseCode code = userService.checkPassword2(user.getId(),password2);
         return code;
     }
 }

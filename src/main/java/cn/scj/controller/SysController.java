@@ -51,6 +51,9 @@ public class SysController {
     @Autowired
     private GoodsInfoService goodsInfoService;
 
+   @Autowired
+   private GoodsPackService goodsPackService;
+
 
     /**
      * 跳转到用户管理页面
@@ -398,7 +401,7 @@ public class SysController {
             return "redirect:/sys/goods/to/add";
         }
         goodsInfoService.insertGoods(goodsInfo);
-        return "sys/goodsAdd";
+        return "redirect:/sys/goods/to/list";
     }
 
     /**
@@ -425,5 +428,34 @@ public class SysController {
         return "sys/queryGoods";
     }
 
+    /**
+     * 跳转到商品修改界面
+     * @param id
+     * @return
+     */
+    @RequestMapping("goods/to/updateGoods")
+    public String toUpdateGoods(@RequestParam("id")Long id,Model model){
+        GoodsInfoWithBLOBs goodsInfoWithBLOBs = goodsInfoService.query(id);
+        model.addAttribute("goods",goodsInfoWithBLOBs);
+        return "sys/goodsUpdate";
+    }
 
+    /**
+     * 商品修改
+     * @param goodsInfoWithBLOBs
+     * @return
+     */
+    @RequestMapping("goods/updateGoods")
+    public String updateGoods(GoodsInfoWithBLOBs goodsInfoWithBLOBs){
+        //sss
+        goodsInfoWithBLOBs.setLastUpdateTime(LocalDateTime.now());
+        goodsInfoService.updateGoods(goodsInfoWithBLOBs);
+        return "redirect:/sys/goods/to/list";
+    }
+
+    @RequestMapping("pack/list")
+    public String packList(){
+
+        return "";
+    }
 }

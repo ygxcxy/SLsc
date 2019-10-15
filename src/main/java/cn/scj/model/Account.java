@@ -2,6 +2,7 @@ package cn.scj.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,8 +32,6 @@ public class Account implements Serializable {
      */
     private BigDecimal balance;
 
-    /**
-     * 更新时间
-     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }

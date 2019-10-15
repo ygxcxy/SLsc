@@ -17,44 +17,44 @@
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
         <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">角色列表:</label>
-            <div class="layui-input-block">
-                <input type="radio" name="roleId" value="1" title="系统管理员"/>
-                <input type="radio" name="roleId" value="2" title="会员" checked/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色列表:</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="roleId" value="1" title="系统管理员"/>
+                    <input type="radio" name="roleId" value="2" title="会员" checked/>
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">权限列表:</label>
-            <div class="layui-input-block">
-                <button class="layui-btn" id ="bth" lay-filter="formDemo">保存</button>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限列表:</label>
+                <div class="layui-input-block">
+                    <button class="layui-btn" id ="bth" lay-filter="formDemo">保存</button>
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input type="checkbox" name="like[read]" title="阅读" checked>
 
+                </div>
             </div>
-        </div>
             <%--一級--%>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <c:forEach items="${first}" var="obj" varStatus="index">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <c:forEach items="${first}" var="obj" varStatus="index">
                         <br> <input type="checkbox" name="functionId" title="${obj.functionName}">
-                    <c:forEach var="second" items="${second}">
-                        <c:if test="${obj.id==second.parentId}">
-                            <input type="checkbox" name="functionId" title="${second.functionName}">
-                        </c:if>
+                        <c:forEach var="second" items="${second}">
+                            <c:if test="${obj.id==second.parentId}">
+                                <input type="checkbox" name="functionId" title="${second.functionName}">
+                            </c:if>
+                        </c:forEach>
                     </c:forEach>
-                </c:forEach>
+                </div>
             </div>
-        </div>
 
 
         </form>
 
 
-</div>
+    </div>
 </body>
 <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
 <script>

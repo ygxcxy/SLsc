@@ -2,7 +2,6 @@ package cn.scj.service.impl;
 
 import cn.scj.dto.ResponseCode;
 import cn.scj.mapper.GoodsInfoMapper;
-import cn.scj.model.GoodsInfo;
 import cn.scj.model.GoodsInfoWithBLOBs;
 import cn.scj.service.GoodsInfoService;
 import com.github.pagehelper.PageHelper;
@@ -62,5 +61,10 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public GoodsInfoWithBLOBs query(Long id) {
         return goodsInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateGoods(GoodsInfoWithBLOBs goodsInfoWithBLOBs) {
+        return goodsInfoMapper.updateByPrimaryKeySelective(goodsInfoWithBLOBs);
     }
 }

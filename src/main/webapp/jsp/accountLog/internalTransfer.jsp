@@ -41,7 +41,6 @@
                             </div>
                         </div>
                         <div class="layui-col-xs3">
-
                             <label class="layui-form-label" id="tipCard" style="color: red;width: 420px" >（接收转帐的会员用户名必须填写正确，不能给註册会员转帐。）</label>
                         </div>
                 </div>
@@ -137,6 +136,8 @@
             $.ajax({
                 url:"${ctx}/account/checkTransferCard",
                 data:{"transferCard":transferCard},
+                url:"${ctx}/user/checkTransferCard",
+                data:{"password2":password2},
                 success:function (data) {
                     if(data == 2000){
                         checkTCard = true;

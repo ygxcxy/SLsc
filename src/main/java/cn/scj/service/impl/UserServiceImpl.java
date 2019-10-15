@@ -9,6 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -124,51 +126,5 @@ public class UserServiceImpl implements UserService {
         userMapper.save(user);
     }
 
-    @Override
-    public ResponseCode checkPassword2(Long id, String password2) {
-        ResponseCode code = new ResponseCode();
-        AuUser user = userMapper.queryUserById(id);
-        if (user == null){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("系统错误！转账取消！");
-        }else{
-            if(user.getPassword2().equals(password2)){
-                code.setCode(ResponseCode.SUCCESS);
-                code.setMsg("二级密码验证通过！");
-            }else{
-                code.setCode(ResponseCode.FAIL);
-                code.setMsg("验证失败！二级密码错误！");
-            }
-        }
-        return code;
-    }
-
-    @Override
-    public ResponseCode checkTransferCard(String loginCode, String transferCard) {
-        ResponseCode code = new ResponseCode();
-        if (loginCode.equals(transferCard)){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("不能给自己进行转账！");
-            return code;
-        }
-        AuUser user = userMapper.queryUserByCard(transferCard);
-        if (user == null){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("转账用户不存在！");
-        }else if(user.getUserType().equals("")){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("不能给管理员转账！");
-        }else if(user.getUserType() == null){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("该用户错误！验证失败！");
-        }else if(user.getUserType().equals("1")){
-            code.setCode(ResponseCode.FAIL);
-            code.setMsg("不能给注册会员转账！");
-        }else{
-            code.setCode(ResponseCode.SUCCESS);
-            code.setMsg("转账用户验证通过！");
-        }
-        return code;
-    }
 
 }
