@@ -64,6 +64,8 @@
         © layui.com - 底部固定区域
     </div>
 </div>
+
+</body>
 <script src="${ctx}/layui/layui.js"></script>
 <script>
     //JavaScript代码区域
@@ -92,5 +94,4 @@
         })
     });
 </script>
-</body>
 </html>

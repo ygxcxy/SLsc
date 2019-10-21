@@ -38,19 +38,19 @@
                         <dd><a href="javascript:;">提现明细</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a class="" href="javascript:;">购物管理</a>
                     <dl class="layui-nav-child">
 
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a class="" href="javascript:;">信息查询</a>
                     <dl class="layui-nav-child">
 
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a class="" href="javascript:;">咨询管理</a>
                     <dl class="layui-nav-child">
 
@@ -85,25 +85,25 @@
                 <dl class="layui-nav-child">
                     <dd><a href="${ctx}/account/toRecharge">汇款充值</a></dd>
                     <dd><a href="${ctx}/account/toAccountLog">基本账户</a></dd>
-                    <dd><a href="javascript:;">消费账户</a></dd>
                     <dd><a href="${ctx}/account/toInternalTransfer">内部转账</a></dd>
                     <dd><a href="${ctx}/account/toCashWithdrawal">申请提现</a></dd>
-                    <dd><a href="javascript:;">提现明细</a></dd>
+                    <dd><a href="${ctx}/cash/toCashList">提现明细</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item layui-nav-itemed">
+            <li class="layui-nav-item">
                 <a class="" href="javascript:;">购物管理</a>
                 <dl class="layui-nav-child">
-
+                    <dd><a href="${ctx}/order/toGetCode">报单购货</a></dd>
+                    <dd><a href="${ctx}/order/toRePurchase">重消购货</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item layui-nav-itemed">
+            <li class="layui-nav-item">
                 <a class="" href="javascript:;">信息查询</a>
                 <dl class="layui-nav-child">
 
                 </dl>
             </li>
-            <li class="layui-nav-item layui-nav-itemed">
+            <li class="layui-nav-item">
                 <a class="" href="javascript:;">咨询管理</a>
                 <dl class="layui-nav-child">
 

@@ -87,6 +87,8 @@
         © layui.com - 底部固定区域
     </div>
 </div>
+
+</body>
 <script src="${ctx}/layui/layui.js"></script>
 <script>
     //JavaScript代码区域
@@ -127,7 +129,7 @@
             }
             //提现金额
             var money= parseFloat($("input[name='money']").val());
-            
+
             $.ajax({
                 url:"${ctx}/cash/cashWithdrawal",
                 data:{"money":money},
@@ -136,7 +138,7 @@
                         layer.msg(data.msg,{
                             time:1500,
                             end:function () {
-                            window.location.href = "${ctx}/account/toInternalTransfer";
+                                window.location.href = "${ctx}/account/toCashWithdrawal";
                             }
                         });
                     }else{
@@ -147,5 +149,4 @@
         })
     });
 </script>
-</body>
 </html>

@@ -1,5 +1,6 @@
 package cn.scj.controller;
 
+import cn.scj.dto.AccountDto;
 import cn.scj.dto.ResponseCode;
 import cn.scj.model.AuUser;
 import cn.scj.service.UserCashService;
@@ -19,12 +20,28 @@ public class UserCashController {
     @Autowired
     private UserCashService cashService;
 
+    @RequestMapping("toCashList")
+    public String toCashList(){
+        return "accountLog/cashList";
+    }
+
+
     //申请提现
     @RequestMapping("cashWithdrawal")
     @ResponseBody
     public ResponseCode cashWithdrawal(HttpSession session, @RequestParam("money") BigDecimal money){
         AuUser user = (AuUser) session.getAttribute("user");
         ResponseCode code = cashService.cashWithdrawal(user,money);
+        return code;
+    }
+
+    //展示提现明细
+    @RequestMapping("showCashByEndDate")
+    @ResponseBody
+    public ResponseCode showCashByEndDate(HttpSession session, AccountDto accountDto){
+        AuUser user = (AuUser) session.getAttribute("user");
+        accountDto.setUserId(user.getId());
+        ResponseCode code = cashService.showCashByEndDate(accountDto);
         return code;
     }
 }

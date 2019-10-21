@@ -24,13 +24,13 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user_account_201404
+    from user_account
     where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
   </select>
     <select id="showAccountByEndDate" resultType="cn.scj.model.UserAccount">
       select
       <include refid="Base_Column_List" />
-      from user_account_201404
+      from user_account
       <where>
           user_id = #{userId}
           <if test="beginDate != null">
@@ -43,11 +43,11 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user_account_201404
+    delete from user_account
     where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="ACCOUNT_ID" keyProperty="accountId" parameterType="cn.scj.model.UserAccount" useGeneratedKeys="true">
-    insert into user_account_201404 (USER_ID, ACCOUNT_DATE, STAT, 
+    insert into user_account (USER_ID, ACCOUNT_DATE, STAT, 
       BASE_IN, BASE_OUT, BASE_BALANCE, 
       REPEAT_IN, REPEAT_OUT, REPEAT_BALANCE, 
       FREE_PV, ALREADY_PV, BUY_PV
@@ -59,7 +59,7 @@
       )
   </insert>
   <insert id="insertSelective" keyColumn="ACCOUNT_ID" keyProperty="accountId" parameterType="cn.scj.model.UserAccount" useGeneratedKeys="true">
-    insert into user_account_201404
+    insert into user_account
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         USER_ID,
@@ -138,7 +138,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.scj.model.UserAccount">
-    update user_account_201404
+    update user_account
     <set>
       <if test="userId != null">
         USER_ID = #{userId,jdbcType=INTEGER},
@@ -180,7 +180,7 @@
     where ACCOUNT_ID = #{accountId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.scj.model.UserAccount">
-    update user_account_201404
+    update user_account
     set USER_ID = #{userId,jdbcType=INTEGER},
       ACCOUNT_DATE = #{accountDate,jdbcType=TIMESTAMP},
       STAT = #{stat,jdbcType=INTEGER},

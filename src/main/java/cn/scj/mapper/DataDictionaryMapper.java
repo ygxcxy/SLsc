@@ -13,4 +13,6 @@ public interface DataDictionaryMapper {
     List<DataDictionary> findByTypeCode(@Param("cardType") String cardType);
 
     DataDictionary findByValueId(@Param("cardId") String cardType, @Param("cardType") String card_type);
+
+    int findValueIdByValue(@Param("userType") String userType, @Param("shipNote") String shipNote);
 }

@@ -88,6 +88,8 @@
         © layui.com - 底部固定区域
     </div>
 </div>
+
+</body>
 <script src="${ctx}/layui/layui.js"></script>
 <script>
     //JavaScript代码区域
@@ -208,7 +210,7 @@
                         layer.msg(data.msg,{
                             time:1500,
                             end:function () {
-                            window.location.href = "${ctx}/account/toInternalTransfer";
+                                window.location.href = "${ctx}/account/toInternalTransfer";
                             }
                         });
 
@@ -221,5 +223,4 @@
         })
     });
 </script>
-</body>
 </html>

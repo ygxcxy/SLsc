@@ -33,34 +33,9 @@
     from goods_info
     where id = #{id,jdbcType=BIGINT}
   </select>
-    <select id="findList" resultType="cn.scj.model.GoodsInfoWithBLOBs">
-      select id, goods_SN, goods_Name, goods_Format, market_Price, real_Price,
-      state, note, num, unit, create_Time, last_Update_Time, created_By
-      from goods_info
-      <where>
-        <if test="goodsName!=null and goodsName !=''">
-          <bind name="newGoodsName" value="'%'+goodsName+'%'"/>
-          goods_Name like #{newGoodsName}
-        </if>
-      </where>
-
-
-    </select>
-  <select id="findBySn" resultType="cn.scj.model.GoodsInfoWithBLOBs">
-    select goods_SN
-    from goods_info
-    where goods_SN = #{goodsSn}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from goods_info
     where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="dels">
-    delete from goods_info
-    where id in
-    <foreach collection="list" open="(" close=")" separator="," item="ids">
-        #{ids}
-    </foreach>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.GoodsInfoWithBLOBs" useGeneratedKeys="true">
     insert into goods_info (goods_SN, goods_Name, market_Price, 

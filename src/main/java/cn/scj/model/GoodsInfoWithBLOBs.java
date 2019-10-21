@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * goods_info
- * @author 
+ * @author
  */
 @Setter
 @Getter

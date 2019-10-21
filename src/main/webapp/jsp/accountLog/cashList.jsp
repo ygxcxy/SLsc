@@ -22,7 +22,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h4>会员列表</h4>
+            <h4>提现明细</h4>
             <hr>
             <form method="post">
                 <div class="layui-form-item">
@@ -83,15 +83,27 @@
         function reloadTable(beginDate,endDate){
             table.render({
                 elem: '#test'
-                ,url:'${ctx}/account/showAccountByEndDate'
+                ,url:'${ctx}/cash/showCashByEndDate'
                 ,where:{"beginDate":beginDate,"endDate":endDate}
                 ,cols: [[
-                    {field:'accountDateStr', width:180, title: '日期', sort: true}
-                    ,{field:'accountTimeStr', width:180, title: '时间'}
-                    ,{field:'actionDesc', width:180, title: '摘要', sort: true}
-                    ,{field:'baseIn', width:180, title: '入账金额（元）'}
-                    ,{field:'baseOut', title: '出账金额（元）', width: 180, sort: true}
-                    ,{field:'baseBalance', width:135, title: '余额（元）'}
+                    {field:'cashId', width:180, title: '编号', sort: true}
+                    ,{field:'cashTimeStr', width:180, title: '日期', sort: true}
+                    ,{field:'cashMoney', width:180, title: '提现金额（元）'}
+                    ,{field:'creditedMoney', width:180, title: '到账金额（元）', sort: true}
+                    ,{field:'stat', width:180, title: '状态'
+                        ,templet: function(d){
+                            // 0申请提现,1审核通过,2转账完毕
+                            if(d.stat == 0){
+                                return "申请提现";
+                            }else  if(d.stat == 1){
+                                return "审核通过";
+                            }else  if(d.stat == 2){
+                                return "转账完毕";
+                            }else{
+                                return"";
+                            }
+                        }
+                    }
 
                 ]]
                 ,page: true

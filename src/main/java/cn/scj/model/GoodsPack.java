@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * goods_pack
- * @author 
+ * @author
  */
 @Setter
 @Getter
@@ -73,5 +73,9 @@ public class GoodsPack implements Serializable {
      * 备注说明
      */
     private String note;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
 
 }
