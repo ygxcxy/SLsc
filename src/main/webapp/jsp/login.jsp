@@ -41,11 +41,9 @@
 </body>
 <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['element','form','jquery','layer','element'],function(){
-        var element = layui.element;
+    layui.use(['form','jquery','layer'],function(){
         var form = layui.form;
         var $ = layui.jquery;
-        var element = layui.element;
         var layer = layui.layer;
         $("#login").click(function () {
             $.ajax({

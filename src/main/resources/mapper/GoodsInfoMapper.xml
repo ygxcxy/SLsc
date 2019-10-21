@@ -26,26 +26,26 @@
     goods_Format, note
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from goods_info
     where id = #{id,jdbcType=BIGINT}
   </select>
-    <select id="findList" resultType="cn.scj.model.GoodsInfoWithBLOBs">
-      select id, goods_SN, goods_Name, goods_Format, market_Price, real_Price,
-      state, note, num, unit, create_Time, last_Update_Time, created_By
-      from goods_info
-      <where>
-        <if test="goodsName!=null and goodsName !=''">
-          <bind name="newGoodsName" value="'%'+goodsName+'%'"/>
-          goods_Name like #{newGoodsName}
-        </if>
-      </where>
+  <select id="findList" resultType="cn.scj.model.GoodsInfoWithBLOBs">
+    select id, goods_SN, goods_Name, goods_Format, market_Price, real_Price,
+    state, note, num, unit, create_Time, last_Update_Time, created_By
+    from goods_info
+    <where>
+      <if test="goodsName!=null and goodsName !=''">
+        <bind name="newGoodsName" value="'%'+goodsName+'%'"/>
+        goods_Name like #{newGoodsName}
+      </if>
+    </where>
 
 
-    </select>
+  </select>
   <select id="findBySn" resultType="cn.scj.model.GoodsInfoWithBLOBs">
     select goods_SN
     from goods_info
@@ -59,7 +59,7 @@
     delete from goods_info
     where id in
     <foreach collection="list" open="(" close=")" separator="," item="ids">
-        #{ids}
+      #{ids}
     </foreach>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.scj.model.GoodsInfoWithBLOBs" useGeneratedKeys="true">

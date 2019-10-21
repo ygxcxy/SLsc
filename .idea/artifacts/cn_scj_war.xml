@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cn.scj:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>cn.scj</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="cn.scj.war">
+      <element id="artifact" artifact-name="cn.scj:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -44,7 +44,6 @@
                     <input type="submit" class="layui-btn" value="提交">
                 </div>
             </div>
-
             </div>
         </form>
     </div>

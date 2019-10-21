@@ -12,4 +12,9 @@
         from data_dictionary
         where type_Code=#{cardType} and value_Id=#{cardId}
     </select>
+    <select id="findValueIdByValue" resultType="java.lang.Integer">
+        select value_Id
+        from data_dictionary
+        where type_Code=#{userType} and value_name=#{shipNote}
+    </select>
 </mapper>

@@ -44,7 +44,8 @@
 </body>
 <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['table','jquery','table','layer'], function(){
+    layui.use(['element','table','jquery','table','layer'], function(){
+        var element = layui.element;
         var table = layui.table;
         var $ = layui.jquery;
         var layer = layui.layer;
@@ -121,7 +122,7 @@
                 });
             } else if(obj.event === 'edit'){
                 // layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                location.href="${ctx}/sys/goods/to/updateGoods?id="+data.id;
+                alert("1111")
             }
         });
 

@@ -46,8 +46,8 @@
 <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['element','table','jquery','table','layer'], function(){
-        var table = layui.table;
         var element = layui.element;
+        var table = layui.table;
         var $ = layui.jquery;
         var layer = layui.layer;
         $("#btn").click(function () {

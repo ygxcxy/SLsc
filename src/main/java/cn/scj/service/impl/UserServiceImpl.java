@@ -127,6 +127,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseCode checkTransferCard(String loginCode, String transferCard) {
+        ResponseCode code = new ResponseCode();
+        if(loginCode.equals(transferCard)){
+            code.setCode(ResponseCode.FAIL);
+            code.setMsg("目标会员不能为自己！");
+            return code;
+        }
+        AuUser user = userMapper.queryUserByCard(transferCard);
+        if(user == null){
+            code.setCode(ResponseCode.FAIL);
+            code.setMsg("验证失败，用户不存在！");
+        }else if(user.getUserType().equals("")){
+            code.setCode(ResponseCode.FAIL);
+            code.setMsg("不能给管理员转账！");
+        }else if(user.getUserType().equals("1")){
+            code.setCode(ResponseCode.FAIL);
+            code.setMsg("不能给注册用户转账！");
+        }else{
+            code.setCode(ResponseCode.SUCCESS);
+            code.setMsg("转账目标会员验证通过！");
+        }
+        return code;
+    }
+
+    @Override
     public ResponseCode checkPassword2(Long id, String password2) {
         ResponseCode code = new ResponseCode();
         AuUser user = userMapper.queryUserById(id);

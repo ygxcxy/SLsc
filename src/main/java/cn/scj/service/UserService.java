@@ -35,6 +35,8 @@ public interface UserService {
 
     void add(AuUser user);
 
+    ResponseCode checkTransferCard(String loginCode, String transferCard);
+
     ResponseCode checkPassword2(Long id, String password2);
 
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * goods_pack
- * @author 
+ * @author
  */
 @Setter
 @Getter
