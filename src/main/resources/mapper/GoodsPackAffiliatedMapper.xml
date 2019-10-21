@@ -11,7 +11,7 @@
     id, goods_Pack_Id, goods_Info_Id, goods_Num
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from goods_pack_affiliated
     where id = #{id,jdbcType=BIGINT}

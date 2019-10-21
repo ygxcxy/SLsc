@@ -29,14 +29,14 @@
                     <div class="layui-col-xs3">
                         <label class="layui-form-label">编号</label>
                         <div class="layui-input-block">
-                            <input type="text" class="layui-input" id="code">
+                            <input type="text" class="layui-input" id="goodsPackCode">
                         </div>
                     </div>
 
                     <div class="layui-col-xs3">
                         <label class="layui-form-label">套餐标题</label>
                         <div class="layui-input-block">
-                            <input type="text" class="layui-input" id="title">
+                            <input type="text" class="layui-input" id="goodsPackName">
                         </div>
                     </div>
                     <div class="layui-col-xs3">
@@ -70,11 +70,11 @@
         var table = layui.table;
 
         reloadTable(null,null);
-        function reloadTable(beginDate,endDate){
+        function reloadTable(goodsPackCode,goodsPackName){
             table.render({
                 elem: '#test'
-                ,url:'${ctx}/cash/showCashByEndDate'
-                ,where:{"beginDate":beginDate,"endDate":endDate}
+                ,url:'${ctx}/order/showGoodsPackByType'
+                ,where:{"goodsPackCode":goodsPackCode,"goodsPackName":goodsPackName}
                 ,cols: [[
                     {field:'cashId', width:180, title: '编号', sort: true}
                     ,{field:'cashTimeStr', width:180, title: '日期', sort: true}

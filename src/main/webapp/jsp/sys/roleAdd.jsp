@@ -44,17 +44,18 @@
                     <input type="submit" class="layui-btn" value="提交">
                 </div>
             </div>
-            <script src="${ctx}/layui/layui.js" charset="utf-8"></script>
-            <script>
-                //JavaScript代码区域
-                layui.use(['element', 'form'], function () {
-                    var element = layui.element;
-                    var form = layui.form;
-
-                });
-            </script>
+            </div>
         </form>
     </div>
 </div>
 </body>
+<script src="${ctx}/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'form'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+    });
+</script>
 </html>

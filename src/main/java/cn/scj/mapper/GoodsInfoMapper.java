@@ -2,6 +2,9 @@ package cn.scj.mapper;
 
 import cn.scj.model.GoodsInfo;
 import cn.scj.model.GoodsInfoWithBLOBs;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GoodsInfoMapper {
     int deleteByPrimaryKey(Long id);
@@ -17,4 +20,10 @@ public interface GoodsInfoMapper {
     int updateByPrimaryKeyWithBLOBs(GoodsInfoWithBLOBs record);
 
     int updateByPrimaryKey(GoodsInfo record);
+
+    List<GoodsInfoWithBLOBs> findList(String goodsName);
+
+    GoodsInfoWithBLOBs findBySn(@Param("goodsSn") String goodsSn);
+
+    void dels(List<Integer> ids);
 }

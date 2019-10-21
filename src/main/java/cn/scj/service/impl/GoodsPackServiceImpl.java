@@ -1,5 +1,6 @@
 package cn.scj.service.impl;
 
+import cn.scj.dto.ResponseCode;
 import cn.scj.mapper.GoodsPackMapper;
 import cn.scj.model.GoodsPack;
 import cn.scj.service.GoodsPackService;
@@ -17,4 +18,10 @@ public class GoodsPackServiceImpl implements GoodsPackService {
 
     @Autowired
     private GoodsPackMapper goodsPackMapper;
+
+    @Override
+    public ResponseCode showGoodsPackByType(GoodsPack goodsPack) {
+        goodsPack.setTypeId(2);
+        return goodsPackMapper.showGoodsPackByType(goodsPack);
+    }
 }

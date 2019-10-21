@@ -3,10 +3,7 @@ package cn.scj.controller;
 import cn.scj.dto.ResponseCode;
 
 import cn.scj.model.*;
-import cn.scj.service.AccountService;
-import cn.scj.service.CountryService;
-import cn.scj.service.DataDictionaryService;
-import cn.scj.service.OrderInfoService;
+import cn.scj.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +29,9 @@ public class OrderInfoController {
 
     @Autowired
     private CountryService countryService;
+
+    @Autowired
+    private GoodsPackService goodsPackService;
 
     
     @RequestMapping("toGetCode")
@@ -91,6 +91,13 @@ public class OrderInfoController {
     @ResponseBody
     public ResponseCode addOrderInfo(OrderInfo orderInfo){
         ResponseCode code = orderInfoService.addOrderInfo(orderInfo);
+        return code;
+    }
+
+    @RequestMapping("showGoodsPackByType")
+    @ResponseBody
+    public ResponseCode showGoodsPackByType(GoodsPack goodsPack){
+        ResponseCode code = goodsPackService.showGoodsPackByType(goodsPack);
         return code;
     }
 }
